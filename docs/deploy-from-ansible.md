@@ -83,11 +83,9 @@ Note: The `strongswan` role generates Apple profiles with On-Demand Wifi and Cel
 
 - role: local, provider: local
 
-This role is intended to be run for local install onto an Ubuntu server, or onto an unsupported cloud provider's Ubuntu instance. Required variables:
+Required variables:
 
-- server - IP address of your server (or "localhost" if deploying to the local machine)
-- endpoint - public IP address of the server you're installing on
-- ssh_user - name of the SSH user you will use to install on the machine (passwordless login required). If `server=localhost`, this isn't required.
+- server - IP address of your server
 - ca_password - Password for the private CA key
 
 Note that by default, the iptables rules on your existing server will be overwritten. If you don't want to overwrite the iptables rules, you can use the `--skip-tags iptables` flag.
@@ -250,6 +248,16 @@ Required variables:
 ### OpenStack
 
 You need to source the rc file prior to run Algo. Download it from the OpenStack dashboard->Compute->API Access and source it in the shell (eg: source /tmp/dhc-openrc.sh)
+
+
+### Local
+
+Required variables:
+
+- server - IP or hostname to access the server via SSH
+- endpoint - Public IP address or domain name of your server
+- ssh_user
+
 
 ### Update users
 
