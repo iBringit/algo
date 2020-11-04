@@ -7,7 +7,6 @@
   with_items:
     - private
     - public
-    - preshared
   delegate_to: localhost
   become: false
 
