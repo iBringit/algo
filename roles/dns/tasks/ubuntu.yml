@@ -24,7 +24,7 @@
     mode: 0644
 
 - block:
-  - name: Ubuntu | Configure AppArmor policy for dnscrypt-proxy
+  - name: Ubuntu | Unbound profile for apparmor configured
     copy:
       src: apparmor.profile.dnscrypt-proxy
       dest: /etc/apparmor.d/usr.bin.dnscrypt-proxy
