@@ -27,8 +27,12 @@
   tasks:
     - block:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - name: Cloud prompt
         pause:
+=======
+      - pause:
+>>>>>>> parent of 25513cf... Refactoring, Linting and additional tests (#1397)
 =======
       - pause:
 >>>>>>> parent of 25513cf... Refactoring, Linting and additional tests (#1397)
@@ -118,11 +122,19 @@
           algo_ondemand_cellular: >-
             {% if ondemand_cellular is defined %}{{ ondemand_cellular | bool }}
 <<<<<<< HEAD
+<<<<<<< HEAD
             {%- elif _ondemand_cellular.user_input is defined %}{{ booleans_map[_ondemand_cellular.user_input] | default(defaults['ondemand_cellular']) }}
             {%- else %}false{% endif %}
           algo_ondemand_wifi: >-
             {% if ondemand_wifi is defined %}{{ ondemand_wifi | bool }}
             {%- elif _ondemand_wifi.user_input is defined %}{{ booleans_map[_ondemand_wifi.user_input] | default(defaults['ondemand_wifi']) }}
+=======
+            {%- elif _ondemand_cellular.user_input is defined and _ondemand_cellular.user_input != "" %}{{ booleans_map[_ondemand_cellular.user_input] | default(defaults['ondemand_cellular']) }}
+            {%- else %}false{% endif %}
+          algo_ondemand_wifi: >-
+            {% if ondemand_wifi is defined %}{{ ondemand_wifi | bool }}
+            {%- elif _ondemand_wifi.user_input is defined and _ondemand_wifi.user_input != "" %}{{ booleans_map[_ondemand_wifi.user_input] | default(defaults['ondemand_wifi']) }}
+>>>>>>> parent of 25513cf... Refactoring, Linting and additional tests (#1397)
 =======
             {%- elif _ondemand_cellular.user_input is defined and _ondemand_cellular.user_input != "" %}{{ booleans_map[_ondemand_cellular.user_input] | default(defaults['ondemand_cellular']) }}
             {%- else %}false{% endif %}
@@ -137,6 +149,7 @@
             {%- else %}{{ '_null' | b64encode }}{% endif %}
           algo_local_dns: >-
             {% if local_dns is defined %}{{ local_dns | bool }}
+<<<<<<< HEAD
 <<<<<<< HEAD
             {%- elif _local_dns.user_input is defined %}{{ booleans_map[_local_dns.user_input] | default(defaults['local_dns']) }}
             {%- else %}false{% endif %}
@@ -153,6 +166,8 @@
             {%- elif _store_cakey.user_input is defined  %}{{ booleans_map[_store_cakey.user_input] | default(defaults['store_cakey']) }}
             {%- else %}false{% endif %}{% endif %}
 =======
+=======
+>>>>>>> parent of 25513cf... Refactoring, Linting and additional tests (#1397)
             {%- elif _local_dns.user_input is defined and _local_dns.user_input != "" %}{{ booleans_map[_local_dns.user_input] | default(defaults['local_dns']) }}
             {%- else %}false{% endif %}
           algo_ssh_tunneling: >-
