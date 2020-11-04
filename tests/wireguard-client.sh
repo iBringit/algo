@@ -19,5 +19,3 @@ wg | grep "latest handshake"
 host google.com 172.16.0.1
 
 echo "WireGuard tests passed"
-
-wg-quick down configs/10.0.8.100/wireguard/user1.conf
