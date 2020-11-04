@@ -4,8 +4,7 @@
     name: wireguard
     state: present
 
-- name: Set OS specific facts
-  set_fact:
+- set_fact:
     service_name: wireguard
   tags: always
 

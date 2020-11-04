@@ -1,19 +1,18 @@
 ---
-- name: Set OS specific facts
-  set_fact:
+
+- set_fact:
     strongswan_additional_plugins: []
 
 - name: Ubuntu | Install strongSwan
   apt:
     name: strongswan
-    state: present
+    state: latest
     update_cache: yes
     install_recommends: yes
 
 - name: Ubuntu | Enforcing ipsec with apparmor
-  command: aa-enforce "{{ item }}"
-  when: apparmor_enabled|default(false)|bool
-  changed_when: false
+  shell: aa-enforce "{{ item }}"
+  when: apparmor_enabled|default(false)|bool == true
   with_items:
     - /usr/lib/ipsec/charon
     - /usr/lib/ipsec/lookip

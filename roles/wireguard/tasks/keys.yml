@@ -3,7 +3,7 @@
   file:
     dest: "{{ config_prefix|default('/') }}etc/wireguard/private_{{ item }}.lock"
     state: absent
-  when: keys_clean_all|bool
+  when: keys_clean_all|bool == True
   with_items:
     - "{{ users }}"
     - "{{ IP_subject_alt_name }}"
@@ -39,10 +39,7 @@
   when: wg_genkey.changed
 
 - name: Generate public keys
-  shell: |
-    set -o pipefail
-    echo "{{ lookup('file', wireguard_pki_path + '/private/' + item) }}" |
-    wg pubkey
+  shell: echo "{{ lookup('file', wireguard_pki_path + '/private/' + item) }}" | wg pubkey
   register: wg_pubkey
   changed_when: false
   args:

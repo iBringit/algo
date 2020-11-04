@@ -42,7 +42,7 @@
       file:
         dest: "{{ ssh_tunnels_config_path }}"
         state: absent
-      when: keys_clean_all|bool
+      when: keys_clean_all|bool == True
 
     - name: Ensure the config directories exist
       file:
