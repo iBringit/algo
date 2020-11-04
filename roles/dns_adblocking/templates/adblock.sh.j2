@@ -3,13 +3,13 @@
 
 TEMP="$(mktemp)"
 TEMP_SORTED="$(mktemp)"
-WHITELIST="/etc/dnscrypt-proxy/white.list"
-BLACKLIST="/etc/dnscrypt-proxy/black.list"
-BLOCKHOSTS="{{ config_prefix|default('/') }}etc/dnscrypt-proxy/blacklist.txt"
+DNSMASQ_WHITELIST="/var/lib/dnsmasq/white.list"
+DNSMASQ_BLACKLIST="/var/lib/dnsmasq/black.list"
+DNSMASQ_BLOCKHOSTS="{{ config_prefix|default('/') }}etc/dnsmasq.d/block.hosts.conf"
 BLOCKLIST_URLS="{% for url in adblock_lists %}{{ url }} {% endfor %}"
 
 #Delete the old block.hosts to make room for the updates
-rm -f $BLOCKHOSTS
+rm -f $DNSMASQ_BLOCKHOSTS
 
 echo 'Downloading hosts lists...'
 #Download and process the files needed to make the lists (enable/add more, if you want)
@@ -18,28 +18,28 @@ for url in $BLOCKLIST_URLS; do
 done
 
 #Add black list, if non-empty
-if [ -s "$BLACKLIST" ]
+if [ -s "$DNSMASQ_BLACKLIST" ]
 then
     echo 'Adding blacklist...'
-    cat $BLACKLIST >> "$TEMP"
+    cat $DNSMASQ_BLACKLIST >> "$TEMP"
 fi
 
 #Sort the download/black lists
-awk '/^[^#]/ { print $1 }' "$TEMP" | sort -u > "$TEMP_SORTED"
+awk '/^[^#]/ { print "local=/" $1 "/" }' "$TEMP" | sort -u > "$TEMP_SORTED"
 
 #Filter (if applicable)
-if [ -s "$WHITELIST" ]
+if [ -s "$DNSMASQ_WHITELIST" ]
 then
     #Filter the blacklist, suppressing whitelist matches
     #  This is relatively slow =-(
     echo 'Filtering white list...'
-    grep -v -E "^[[:space:]]*$" $WHITELIST | awk '/^[^#]/ {sub(/\r$/,"");print $1}' | grep -vf - "$TEMP_SORTED" > $BLOCKHOSTS
+    grep -v -E "^[[:space:]]*$" $DNSMASQ_WHITELIST | awk '/^[^#]/ {sub(/\r$/,"");print $1}' | grep -vf - "$TEMP_SORTED" > $DNSMASQ_BLOCKHOSTS
 else
-    cat "$TEMP_SORTED" > $BLOCKHOSTS
+    cat "$TEMP_SORTED" > $DNSMASQ_BLOCKHOSTS
 fi
 
-echo 'Restarting dns service...'
-#Restart the dns service
-systemctl restart dnscrypt-proxy.service
+echo 'Restarting dnsmasq service...'
+#Restart the dnsmasq service
+systemctl restart dnsmasq.service
 
 exit 0
