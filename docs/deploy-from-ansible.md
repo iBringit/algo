@@ -230,6 +230,7 @@ Possible options can be gathered via cli `aws lightsail get-regions`
 Required variables:
 
 - [scaleway_token](https://www.scaleway.com/docs/generate-an-api-token/)
+- [scaleway_org](https://cloud.scaleway.com/#/billing)
 - region
 
 Possible regions:
